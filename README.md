@@ -1,3 +1,4 @@
+![Badge](https://img.shields.io/badge/version-0.01-blue)
 # System Update
 System-update is a APT, NPM and PIPX updater Bash script. 
 
