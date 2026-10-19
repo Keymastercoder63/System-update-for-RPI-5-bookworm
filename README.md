@@ -17,4 +17,4 @@ System-update has been tested on a 4GB Raspberry Pi 5 Running Raspberry Pi OS Bo
 and tested on a 16GB Raspberry Pi 5 running the same OS.
 
 ## bashrc alias
-To configure your system to run `Update.sh` when you enter `system-update` in your terminal you'll need to add a alias into the file `.bashrc` Note that .bashrc is only in Linux. For example you can add the alias like this `alias system-update='~/Update.sh'` and that while work if Update.sh is in your home folder.
+To configure your system to run `Update.sh` when you enter `system-update` in your terminal you'll need to add a alias into the file `.bashrc` Note that .bashrc is only in Linux. For example you can add the alias like this `alias system-update='~/Update.sh'` and that will work if Update.sh is in your home folder.
