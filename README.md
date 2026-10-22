@@ -1,25 +1,56 @@
-![Badge](https://img.shields.io/badge/version-0.0.1-blue)
-#                                              System Update
-System-update is a APT, NPM and PIPX updater Bash script. 
+![Badge](https://img.shields.io/badge/version-0.1.0-blue)
+# System Update
 
-It's only one file but can has a pre-included Desktop entry file if you want to just have a 2-click launcher and thats it no distractions just a updater. Target: Raspberry Pi OS Bookworm (English). Checks if packages are outdated for *apt* and *npm* but just updates *pipx* and *flatpak* Packages. also zip file for download.
+System Update is a single Bash script that updates your **apt**, **flatpak**, **npm (global)** and **pipx** packages in one go. It includes an installer that adds a `system-update` terminal command and an app-menu launcher, so updating is a two-click job with no distractions.
 
-For *apt* packages there’s the -y flag so you don’t need to respond to “Do you want to continue? [Y/n]” but be cautious as it could secretly install malware.
+Target: Raspberry Pi OS Bookworm (English).
 
-It's also recommended to add a alias to `.bashrc` so you can open a terminal in run `system-update` later in this **README** I'll tell you how to do that (Linux only)
+## Install
 
-System Update is also protected by the GNU General Public License v3.0 so it's open source as long as you follow the rules
+```bash
+git clone https://github.com/Keymastercoder63/System-update-for-RPI-5-bookworm.git
+cd System-update-for-RPI-5-bookworm
+./install.sh
+```
 
+This installs:
+
+- `~/.local/bin/system-update`, the command you run from any terminal
+- a **System Update** entry in your app menu
+
+If `~/.local/bin` isn't on your `PATH` yet, log out and back in (or add it in `~/.bashrc`).
+
+## Usage
+
+```bash
+system-update            # run all updates
+system-update --dry-run  # show what would run, change nothing
+```
+
+Run it as your normal user, not with `sudo`. It uses `sudo` itself where needed, because pipx and npm packages are per-user.
+
+What it does:
+
+1. **apt**: runs `apt-get update`, then `full-upgrade -y` if anything is upgradable, then `autoremove` and `autoclean`.
+2. **flatpak**: runs `flatpak update -y` (skipped if flatpak isn't installed).
+3. **npm**: runs `npm update -g` for global packages (skipped if npm isn't installed). To update a project, run `npm update` inside it yourself.
+4. **pipx**: runs `pipx upgrade-all` (skipped if pipx isn't installed).
+
+If one step fails the rest still run, and a summary at the end lists what failed. It also tells you when a reboot is required.
+
+**Note:** apt runs with `-y`, so you won't be asked to confirm. Only use it on systems and software sources you trust.
 
 ## Tested hardware
 
-System-update has been tested on a 4GB Raspberry Pi 5 Running Raspberry Pi OS Bookworm
-and tested on a 16GB Raspberry Pi 5 running the same OS.
-
-## bashrc alias
-To configure your system to run `Update.sh` when you enter `system-update` in your terminal you'll need to add a alias into the file `.bashrc` Note that .bashrc is only in Linux. For example you can add the alias like this `alias system-update='~/Update.sh'` and that will work if Update.sh is in your home folder.
-
+Tested on a 4GB Raspberry Pi 5 and a 16GB Raspberry Pi 5, both running Raspberry Pi OS Bookworm.
 
 ## Recent updates
-System-update-for-Raspberry-OS-Bookworm has now been changed to System-update-for-RPI5-bookworm
 
+- The script now runs as your normal user and no longer rewrites `package.json` in the current folder.
+- Added `--dry-run`, per-step error handling and a reboot notice.
+- Added `install.sh`, which replaces the manual `.bashrc` alias and fixes the desktop launcher.
+- The repository was renamed to System-update-for-RPI-5-bookworm.
+
+## License
+
+GNU General Public License v3.0. See `LICENSE`.
